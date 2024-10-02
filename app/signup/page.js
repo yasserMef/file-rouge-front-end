@@ -58,11 +58,14 @@ function Page() {
         body: formData, // Envoi de FormData sans Content-Type
       });
 
+      const data = await response.json();
+      console.log(data);
+
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
 
-      const data = await response.json();
+      
       console.log("Réponse du serveur:", data);
       router.push("/login")
     } catch (err) {

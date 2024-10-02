@@ -1,6 +1,37 @@
-import React from 'react';
+"use client";
+import React , {useEffect , useState} from 'react';
+import { useRouter } from "next/navigation";
 
-function page() {
+function page({params}) {
+  const router = useRouter();
+  const [offer , setOffer] = useState({})
+  
+  
+  const getOffer = async() =>{
+    const response = await fetch(`http://localhost:8000/v1/api/offerInfo/${params.id}` , {
+      method: 'GET', headers:{
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+      }
+   });
+    const data = await response.json();
+    console.log(data)
+    return data.data
+  }
+ const getData = async() =>{
+  const dt = await getOffer()
+  console.log(JSON.parse(localStorage.getItem("token")))
+  setOffer(dt)
+  }
+
+  useEffect(() => {
+    
+    getData();
+
+  }, []) 
+  
+  
+  
   return (
     <div className="bg-gray-100 min-h-screen flex justify-center items-center p-4">
       <div className="bg-white p-8 md:p-12 rounded-lg shadow-lg w-full max-w-4xl">
@@ -10,7 +41,7 @@ function page() {
         {/* Nom de la société */}
         <div className="mb-4">
           <h3 className="font-bold text-lg">Nom de la Société:</h3>
-          <p className="text-gray-700">nom</p>
+          <p className="text-gray-700">{offer.societeName}</p>
         </div>
         {/* Inscription de l'offre */}
         <div className="mb-4">
@@ -51,7 +82,7 @@ function page() {
         <div className="text-center mt-8">
           <button
                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
- 
+                  onClick={()=> router.push(`/addoffer/${offer._id}`)}
           >
             Demander un emploi
           </button>
