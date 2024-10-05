@@ -1,7 +1,12 @@
 "use client";
+import notify from '@/app/utils/Notfication';
 import React,{useState}  from 'react';
+import {ToastContainer} from "react-toastify"
+import { useRouter } from 'next/navigation';
 
 function Page({params}) {
+  const router  = useRouter();
+  
   const[name , setName] = useState("")
   const[lastName , setLastName] = useState("")
   const[adress , setAdress] = useState("")
@@ -59,16 +64,24 @@ function Page({params}) {
     try {
       const response = await fetch("http://localhost:8000/v1/api/offer", {
         method: "POST",
-        body: formData, // Envoi de FormData sans Content-Type
+        body: formData, 
         headers:{
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
           }
        });
       const data = await response.json();
       console.log(data)
-
-      if (!response.ok) {
+     if(data.message == "Only image or pdf allowed"){
+      notify("le type de fichier doit être pdf" , "error")
+     }
+     if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
+      }
+      if(data.message == "offer created successfully"){
+        notify("offre ajoutée avec succès", "success")
+        setTimeout(() => {
+          router.push("/offer")
+        }, 3000);
       }
     } catch (err) {
       console.error("Erreur lors de l'ajout d'offer travail:", err);
@@ -241,6 +254,7 @@ function Page({params}) {
               Soumettre
             </button>
           </div>
+          <ToastContainer/>
         </form>
       </div>
     </div>

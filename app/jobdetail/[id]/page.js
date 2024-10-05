@@ -46,37 +46,37 @@ function page({params}) {
         {/* Inscription de l'offre */}
         <div className="mb-4">
           <h3 className="font-bold text-lg">Inscription de l'Offre:</h3>
-          <p className="text-gray-700">description</p>
+          <p className="text-gray-700">{offer.offerInscription}</p>
         </div>
         {/* Ville */}
         <div className="mb-4">
           <h3 className="font-bold text-lg">Ville:</h3>
-          <p className="text-gray-700">ville</p>
+          <p className="text-gray-700">{offer.city}</p>
         </div>
         {/* Date de création */}
         <div className="mb-4">
           <h3 className="font-bold text-lg">Date de Création de l'Offre:</h3>
-          <p className="text-gray-700">date</p>
+          <p className="text-gray-700">{offer.creationDate}</p>
         </div>
         {/* Salaire */}
         <div className="mb-4">
           <h3 className="font-bold text-lg">Salaire:</h3>
-          <p className="text-gray-700">salaire DH</p>
+          <p className="text-gray-700">{offer.salary} DH</p>
         </div>
         {/* Type de contrat */}
         <div className="mb-4">
           <h3 className="font-bold text-lg">Type de Contrat:</h3>
-          <p className="text-gray-700">Contrat</p>
+          <p className="text-gray-700">{offer.contractType}</p>
         </div>
         {/* Type de travail */}
         <div className="mb-4">
           <h3 className="font-bold text-lg">Type de Travail:</h3>
-          <p className="text-gray-700">Travaile</p>
+          <p className="text-gray-700">{offer.jobType}</p>
         </div>
         {/* Niveau d'expérience */}
         <div className="mb-4">
           <h3 className="font-bold text-lg">Niveau d'Expérience:</h3>
-          <p className="text-gray-700">experience</p>
+          <p className="text-gray-700">{offer.experienceLevel}</p>
         </div>
         {/* Button for applying */}
         <div className="text-center mt-8">

@@ -1,5 +1,7 @@
 "use client";
-import React ,{useState} from 'react'
+import React ,{useState , useRef    } from 'react'
+import notify from '../utils/Notfication';
+import { ToastContainer } from 'react-toastify';
 
 function page() {
   const[companyName , setCompanyName] = useState("")
@@ -11,6 +13,7 @@ function page() {
   const[typeContrat , setTypeContrat] = useState("")
   const[jobType , setJobType] = useState("")
   const[nivExp , setNivExp] = useState("")
+  const fileRef = useRef()
 
   const changeCompanyName = (e)=>{
     setCompanyName(e.target.value)
@@ -68,6 +71,19 @@ function page() {
        });
       const data = await response.json();
       console.log(data)
+      if(data.message == "Job created successfully"){
+         notify("annonce bien ajouté" , "success")
+         setCompanyName("")
+         setCity("")
+         fileRef.current.value=''
+         setSalary("")
+         setTypeContrat("")
+         setJobType("")
+         setNivExp("")
+         setInscription("")
+         setOffer("")
+
+      }
 
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
@@ -96,8 +112,9 @@ function page() {
         id="societe-name"
         placeholder="Nom de la société"
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        required=""
+        required="nom de société est obligatoir"
         onChange={changeCompanyName}
+        value={companyName}
       />
     </div>
 
@@ -115,6 +132,7 @@ function page() {
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         required=""
         onChange={changeCompanyOffer}
+        value={offer}
       />
     </div>
     {/* Inscription offre */}
@@ -132,6 +150,7 @@ function page() {
         required=""
         defaultValue={""}
         onChange={changeOfferInscription}
+        value={inscription}
       />
     </div>
     {/* Image de la société */}
@@ -145,8 +164,10 @@ function page() {
       <input
         type="file"
         id="image-societe"
+        required=""
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={onchangeCompanyPicture}
+        ref={fileRef}
       />
     </div>
     {/* Ville */}
@@ -161,6 +182,7 @@ function page() {
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         required=""
         onChange={changeCity}
+        value={city}
       />
     </div>
      {/* Salaire */}
@@ -175,6 +197,7 @@ function page() {
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         required=""
         onChange={changeSalary}
+        value={salary}
       />
     </div>
     {/* Type de contrat */}
@@ -190,7 +213,7 @@ function page() {
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         required=""
         onChange={changeContractType}
-        
+        value={typeContrat}
         >
         <option value="" disabled="" selected="">
           Choisir un type de contrat
@@ -211,6 +234,7 @@ function page() {
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         required=""
         onChange={changeJobType}
+        value={jobType}
       >
         <option value="" disabled="" selected="">
           Choisir un type de travail
@@ -233,6 +257,7 @@ function page() {
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         required=""
         onChange={changeNivExper}
+        value={nivExp}
       >
         <option value="" disabled="" selected="">
           Choisir un niveau
@@ -252,11 +277,10 @@ function page() {
         Soumettre l'Annonce
       </button>
     </div>
+    <ToastContainer />
   </form>
 </div>
-
-
-    </div>
+</div>
   )
 }
 

@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import notify from "../utils/Notfication";
+import {ToastContainer} from "react-toastify"
 
 function Page() {
   const router = useRouter();
@@ -33,27 +35,47 @@ function Page() {
      
 
       const data = await response.json();
-      console.log("Server response:", data);
+      console.log("Server response:", data.message);
 
       // Store the user data and redirect after successful login
-      localStorage.setItem("user", JSON.stringify(data.data));
-      localStorage.setItem("token", JSON.stringify(data.tokenL));
+      if(data.message =="password invalid" ||  data.message=="no user for this email"){
+      notify("probleme mot de passe ou  email", "error");
+        return;
+      }else{
+        console.log("hello")
+        localStorage.setItem("user", JSON.stringify(data.data));
+        localStorage.setItem("token", JSON.stringify(data.tokenL));
+      }
+   
 
       if(data.data.role == "user"){
-        router.push("/offer")
+        setTimeout(() => {
+          router.push("/offer")
+          router.refresh()
+        }, 3000);
+
       }else{
-        router.push("/listjob")
-      }
-      router.refresh()
+        setTimeout(() => {
+          router.push("/listjob")   
+          router.refresh()     
+        }, 3000);
+    }
+    notify("connexion réussie" ,"success")
+      
     } catch (err) {
       console.error("Error during login:", err);
     }
   };
-   
+ 
  const user = JSON.parse(localStorage.getItem("user"))
-  if(user!=null && user.role == "company"){
+ const token = JSON.parse(localStorage.getItem("token"))
+ if(!token){
+   router.push("/login");
+ }
+
+  if(user!=null && token!=null && user.role == "company"){
     router.push("/listjob");
-  }else if(user!=null && user.role == "user"){
+  }else if(user!=null && token!=null && user.role == "user"){
     router.push("/offer");
   }else{
     router.push("/login");
@@ -151,13 +173,14 @@ function Page() {
               <p className="text-sm text-white mt-8">
                 Vous n'avez pas de compte ?{" "}
                 <a
-                  href="javascript:void(0);"
+                  href="/signup"
                   className="text-yellow-400 font-semibold hover:underline ml-1"
                 >
                   Inscrivez-vous ici
                 </a>
               </p>
             </div>
+            <ToastContainer/>
           </form>
         </div>
       </div>

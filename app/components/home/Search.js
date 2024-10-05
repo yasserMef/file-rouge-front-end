@@ -3,7 +3,7 @@ import { AiOutlineSearch, AiOutlineCloseCircle } from "react-icons/ai";
 import { BsHouseDoor } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
 
-function Search({searchCompany , searchClick ,  searchLocation , searchJob , searchByContrat}) {
+function Search({searchCompany  ,  searchLocation , searchJob , searchByContrat , clearAllSearch , changeByType , changeByLevel}) {
   
    const searchByCompany =(e)=>{
     searchCompany(e.target.value)
@@ -20,6 +20,17 @@ const searchByTypeContrat = (e)=>{
   searchByContrat(e.target.value)
 }
 
+const changeType = (e) =>{
+  changeByType(e.target.value)
+}
+const changeLevel = (e) =>{
+  changeByLevel(e.target.value)
+}
+
+const clearAll = () =>{
+   clearAllSearch()
+}
+
 
   return (
     <div className=' searchDiv grid gap-10 bg-greyIsh rounded-[10px] p-4 md:p-[3rem]'>
@@ -34,7 +45,6 @@ const searchByTypeContrat = (e)=>{
               placeholder='Search Job Here...'
               onChange={searchByJob}
             />
-            <AiOutlineCloseCircle className='text-[30px] text-[#a5a6a6] hover:text-textColor icon ' />
           </div>
 
           <div className='flex gap-2 items-center w-full md:w-auto'>
@@ -45,7 +55,6 @@ const searchByTypeContrat = (e)=>{
               placeholder='Search By Company...'
               onChange={searchByCompany}
             />
-            <AiOutlineCloseCircle className='text-[30px] text-[#a5a6a6] hover:text-textColor icon ' />
           </div>
 
           <div className='flex gap-2 items-center w-full md:w-auto'>
@@ -56,12 +65,8 @@ const searchByTypeContrat = (e)=>{
               placeholder='Search By Location...'
               onChange={searchByLocation}
             />
-            <AiOutlineCloseCircle className='text-[30px] text-[#a5a6a6] hover:text-textColor icon ' />
           </div>
-        
-          <button onClick={searchClick} className='bg-blueColor p-2 px-4 rounded-[8px] text-white cursor-pointer hover:bg-blue-300'>
-            Search
-          </button>
+  
         </div>
       </form>
        
@@ -78,24 +83,22 @@ const searchByTypeContrat = (e)=>{
 
   <div className='singleSearch flex items-center gap-2'>
     <label htmlFor='type' className='text-[#808080] font-semibold'>Type</label>
-    <select name='' id='type' className='bg-white rounded-[3px] px-4 py-1'>
-      <option value=''>Full-time</option>
-      <option value=''>Remote</option>
-      <option value=''>Contract</option>
-      <option value=''>Part-time</option>
+    <select onChange={changeType} name='' id='type' className='bg-white rounded-[3px] px-4 py-1'>
+      <option value='Temps plein'>Temps plein</option>
+      <option value='Temps partiel'>Temps partiel</option>
+      <option value='Remote'>Remote</option>
     </select>
   </div>
 
   <div className='singleSearch flex items-center gap-2'>
     <label htmlFor='level' className='text-[#808080] font-semibold'>Level</label>
-    <select name='' id='level' className='bg-white rounded-[3px] px-4 py-1'>
-      <option value=''>Senior</option>
-      <option value=''>Beginner</option>
-      <option value=''>Intermediate</option>
-      <option value=''>Advocate</option>
+    <select onChange={changeLevel} name='' id='level' className='bg-white rounded-[3px] px-4 py-1'>
+      <option value='Senior'>Senior</option>
+      <option value='Intermédiaire'>Intermédiaire</option>
+      <option value='Junior'>Junior</option>
     </select>
   </div>
-   <span className='text-[#a1a1a1] cursor-pointer'>Clear All</span>
+   <span onClick={clearAll} className='text-[#a1a1a1] cursor-pointer'>Clear All</span>
    </div>
     </div>
   )

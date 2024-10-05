@@ -35,42 +35,10 @@ const formatDate = (creationDate) => {
 let socket;
 function Jobs({ jobs }) {
   const router = useRouter();
-  const [jobss, setJobs] = useState(jobs || []);
   
 
-  // Initialize and listen for socket events
-  useEffect(() => {
-    
-    // Create a socket instance once
-    console.log("hello");
-    socket = io("http://localhost:8000"); // Connect to the server
-    console.log(socket);
 
-    // Listen for real-time job creation
-    socket.on("newJobCreated", (newJob) => {
-      console.log("New job created:", newJob);
-      setJobs((prevJobs) => [...prevJobs, newJob]);
-    });
 
-    // Listen for job updates
-    socket.on("jobUpdated", (updatedJob) => {
-      setJobs((prevJobs) =>
-        prevJobs.map((job) => (job._id === updatedJob.jobId ? updatedJob : job))
-      );
-    });
-
-    // Listen for job deletions
-    socket.on("jobDeleted", (deletedJob) => {
-      setJobs((prevJobs) => prevJobs.filter((job) => job._id !== deletedJob.jobId));
-    });
-
-    // Cleanup socket connections on component unmount
-    return () => {
-      if (socket) {
-        socket.disconnect(); // Disconnect from the socket
-      }
-    };
-  }, []);
 
   return (
     <div>
@@ -90,10 +58,10 @@ function Jobs({ jobs }) {
             <h6 className='text-[rgb(204,204,204)]'>{job.location}</h6>
             <p className='text-[13px] text-[#959559] pt-[20px] border-t-[2px] 
               mt-[20px] group-hover:text-white'>
-              Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page.
+                {job.offerInscription}
             </p>
             <div className='company flex items-center gap-2'>
-              <img src={job.imageSociete} alt='company logo' className='w-[20%] rounded-full' />
+              <img src={job.file} alt='company logo' className='w-[20%] rounded-full' />
               <span className='text-[14px] py-[1rem] block group-hover:text-white'>{job.societeName}</span>
             </div>
             <button 

@@ -49,18 +49,17 @@ function Page() {
   };
   
   const addUser = async (e) => {
-    e.preventDefault(); // Assurez-vous que l'événement est préventé
+    e.preventDefault(); 
     console.log(image)
     const formData = createFormData();
     try {
       const response = await fetch("http://localhost:8000/v1/api/auth/signup", {
         method: "POST",
-        body: formData, // Envoi de FormData sans Content-Type
+        body: formData, 
       });
 
       const data = await response.json();
-      console.log(data);
-
+      console.log(data)
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
@@ -168,23 +167,7 @@ function Page() {
                   <option value="company">Société</option>
                 </select>
               </div>
-              <div className="flex items-center mt-8">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 shrink-0 rounded"
-                />
-                <label htmlFor="remember-me" className="text-white ml-3 block text-sm">
-                  J'accepte les{' '}
-                  <a
-                    href="javascript:void(0);"
-                    className="text-yellow-500 font-semibold hover:underline ml-1"
-                  >
-                    Termes et Conditions
-                  </a>
-                </label>
-              </div>
+
               <div className="mt-12">
                 <button
                   type="submit" // Changement ici
@@ -196,7 +179,7 @@ function Page() {
                 <p className="text-sm text-white mt-8">
                   Vous avez déjà un compte ?{' '}
                   <a
-                    href="javascript:void(0);"
+                    href="/login"
                     className="text-yellow-400 font-semibold hover:underline ml-1"
                   >
                     Login here

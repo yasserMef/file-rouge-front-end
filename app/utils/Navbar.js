@@ -25,7 +25,7 @@ function Navbar({postuler}) {
     router.push("/login") 
     router.refresh()
    }
-
+    
    const user = JSON.parse(localStorage.getItem("user"))
 
 
@@ -88,7 +88,7 @@ function Navbar({postuler}) {
                 className="flex items-center justify-center focus:outline-none"
               >
                 <img
-                  src="https://via.placeholder.com/40"
+                  src={user.file}
                   alt="Profile"
                   className="w-10 h-10 rounded-full"
                 />
